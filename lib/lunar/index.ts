@@ -271,11 +271,15 @@ export interface TietKhiInfo {
 
 export function tietKhiOf(dd: number, mm: number, yy: number): TietKhiInfo {
   const jd = jdFromDate(dd, mm, yy);
-  const noonLocal = jd - 0.5 - VN_TIMEZONE / 24;
-  const startLocal = jd - 1 - VN_TIMEZONE / 24;
-  const index = INT(sunLongitudeDeg(noonLocal) / 15) % 24;
-  const startIndex = INT(sunLongitudeDeg(startLocal) / 15) % 24;
-  return { index, name: TIET_KHI[index], startsToday: index !== startIndex };
+  const dayStartLocal = jd - 1 + 0.5 - VN_TIMEZONE / 24;
+  const dayEndLocal = jd + 0.5 - VN_TIMEZONE / 24;
+  const noonLocal = jd - VN_TIMEZONE / 24;
+  const startIndex = INT(sunLongitudeDeg(dayStartLocal) / 15) % 24;
+  const endIndex = INT(sunLongitudeDeg(dayEndLocal) / 15) % 24;
+  const noonIndex = INT(sunLongitudeDeg(noonLocal) / 15) % 24;
+  const startsToday = startIndex !== endIndex;
+  const index = startsToday ? endIndex : noonIndex;
+  return { index, name: TIET_KHI[index], startsToday };
 }
 
 /** All leap months that occur during a lunar year. */
