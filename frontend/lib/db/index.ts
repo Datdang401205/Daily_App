@@ -8,8 +8,8 @@ import type {
   Task,
   TaskStatus,
 } from "../types";
-import { addDaysKey, combineDateTime, isoToTime, todayKey } from "../date";
-import { seedEvents, seedCategories, seedSampleTasks, seedSettings, seedCustomEvents } from "./seed";
+import { combineDateTime, isoToTime, todayKey } from "../date";
+import { seedEvents, seedCategories, seedSettings } from "./seed";
 import { nextTaskOccurrenceKey } from "../recurrence";
 import { newId } from "./index-utils";
 import { apiFetch } from "../api";
@@ -77,28 +77,10 @@ async function seedLocalCache(): Promise<void> {
   const existing = await db.settings.get("app");
   if (existing) return;
   const now = new Date().toISOString();
-  const categories = seedCategories();
-  const events = [...seedEvents(now), ...seedCustomEvents(now)];
-  const tasks = seedSampleTasks(now, categories);
-  const notifications: AppNotification[] = [
-    {
-      id: newId(),
-      refId: "welcome",
-      refType: "system",
-      type: "system",
-      title: "Chào mừng đến Lịch Việt",
-      body: "Bật thông báo trong phần Cài đặt để không bỏ lỡ công việc và ngày lễ quan trọng.",
-      scheduledAt: now,
-      read: false,
-      createdAt: now,
-    },
-  ];
-  await db.transaction("rw", [db.tasks, db.events, db.categories, db.settings, db.notifications], async () => {
-    await db.categories.bulkPut(categories);
-    await db.events.bulkPut(events);
-    await db.tasks.bulkPut(tasks);
+  await db.transaction("rw", [db.events, db.categories, db.settings], async () => {
+    await db.categories.bulkPut(seedCategories());
+    await db.events.bulkPut(seedEvents(now));
     await db.settings.put(seedSettings());
-    await db.notifications.bulkPut(notifications);
   });
 }
 
@@ -284,6 +266,3 @@ export async function resetAll(): Promise<void> {
   await replaceLocalState(state);
 }
 
-export function sampleDueDate(offset: number): string {
-  return addDaysKey(todayKey(), offset);
-}

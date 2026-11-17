@@ -1,15 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Be_Vietnam_Pro } from "next/font/google";
+import "@fontsource-variable/inter/wght.css";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { AppShell } from "@/components/app-shell";
-
-const beVietnam = Be_Vietnam_Pro({
-  subsets: ["latin", "vietnamese"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-be-vietnam",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: {
@@ -45,7 +38,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="vi" suppressHydrationWarning>
-      <body className={`${beVietnam.variable} font-sans antialiased`}>
+      <body className="font-sans antialiased">
         <Providers>
           <AppShell>{children}</AppShell>
         </Providers>
