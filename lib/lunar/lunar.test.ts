@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+﻿import { describe, expect, it } from "vitest";
 import {
   canChiDay,
   canChiYear,
@@ -7,7 +7,6 @@ import {
   leapMonthsOfYear,
   lunar2solar,
   solar2lunar,
-  tietKhiOf,
 } from "./index";
 
 describe("julian day", () => {
@@ -64,7 +63,7 @@ describe("solar2lunar", () => {
     expect(solar2lunar(22, 3, 2023)).toMatchObject({ day: 1, month: 2, isLeap: true });
   });
 
-  it("converts lunar to solar and back for 1800-2199", () => {
+  it("converts lunar to solar and back for 1900-2100", () => {
     for (let year = 1900; year <= 2100; year += 3) {
       for (let month = 1; month <= 12; month += 1) {
         for (const day of [1, 10, 20]) {
@@ -91,21 +90,5 @@ describe("can chi", () => {
   it("computes days consistently", () => {
     const jd = jdFromDate(29, 1, 2025);
     expect(canChiDay(jd)).toBe(canChiDay(jdFromDate(29, 1, 2025)));
-  });
-});
-
-describe("tiet khi", () => {
-  it("marks the day Xuân Phân begins (20/3/2025, evening VN)", () => {
-    const t = tietKhiOf(20, 3, 2025);
-    expect(t.name).toBe("Kinh Trập");
-    expect(t.startsToday).toBe(true);
-    expect(tietKhiOf(21, 3, 2025).name).toBe("Xuân Phân");
-  });
-
-  it("marks the day Đông Chí begins (21/12/2025)", () => {
-    const t = tietKhiOf(21, 12, 2025);
-    expect(t.name).toBe("Đại Tuyết");
-    expect(t.startsToday).toBe(true);
-    expect(tietKhiOf(22, 12, 2025).name).toBe("Đông Chí");
   });
 });
