@@ -1,0 +1,26 @@
+databases:
+  - name: daily-app-db
+    plan: free
+    databaseName: daily_app
+    user: daily_app_user
+
+services:
+  - type: web
+    name: daily-app-api
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CORS_ORIGIN
+        value: "*"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: daily-app-db
+          property: connectionString

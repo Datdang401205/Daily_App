@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Lịch Việt">
+  <rect width="512" height="512" rx="112" fill="#b91c1c"/>
+  <circle cx="418" cy="94" r="46" fill="#f59e0b"/>
+  <rect x="116" y="140" width="280" height="264" rx="44" fill="#faf7f0"/>
+  <rect x="116" y="140" width="280" height="72" rx="44" fill="#7f1d1d"/>
+  <rect x="116" y="176" width="280" height="36" fill="#7f1d1d"/>
+  <circle cx="188" cy="140" r="18" fill="#f59e0b"/>
+  <circle cx="324" cy="140" r="18" fill="#f59e0b"/>
+  <rect x="164" y="252" width="184" height="16" rx="8" fill="#e7c9a9"/>
+  <rect x="164" y="300" width="80" height="16" rx="8" fill="#b91c1c"/>
+  <rect x="268" y="300" width="80" height="16" rx="8" fill="#e7c9a9"/>
+  <rect x="164" y="348" width="184" height="16" rx="8" fill="#e7c9a9"/>
+</svg>
